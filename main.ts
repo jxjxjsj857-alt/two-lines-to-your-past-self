@@ -12,6 +12,15 @@ const ENTRY = [
   "It was the last night your grandmother was awake enough to know your name, and you spent it stacking boxes in a warehouse that forgot you by Christmas.",
 ].join("\n");
 
+// The gate: /output/entry.txt must be UTF-8 text of 1 to 280 characters,
+// not only white space, and the brief asks for exactly two lines.
+const lines = ENTRY.split("\n");
+if (lines.length !== 2 || ENTRY.length < 1 || ENTRY.length > 280) {
+  throw new Error(
+    `entry must be exactly two lines of 1-280 chars, got ${lines.length} lines / ${ENTRY.length} chars`,
+  );
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", ENTRY + "\n", "utf8");
 console.log(`Wrote /output/entry.txt (${Buffer.byteLength(ENTRY + "\n", "utf8")} bytes, ${ENTRY.length + 1} chars)`);
